@@ -371,10 +371,13 @@ a { color: inherit; }
 }
 
 /* Toggle button (+/-) on each tile — Figma 45×45 at bottom-right
-   Solid translucent background (NO backdrop-filter — that produces a
-   rectangular bounding-box artefact in Chromium even with border-radius
-   and overflow:hidden clipping). The visual is intentionally similar to
-   frost glass but rendered as a pure circle. */
+   BULLETPROOF circular button:
+   - explicit border-radius + overflow: hidden (clip ANYTHING that would
+     extend beyond the circle, including IMG icon corners)
+   - dark translucent bg (high contrast — the circle is always visible)
+   - icons sized SMALLER than button so they sit safely inside the circle
+   - no backdrop-filter, no box-shadow, no border (anything that historically
+     produced rectangular artefacts in Chromium) */
 .gallery-toggle {
     position: absolute;
     right: 20px;
@@ -386,23 +389,21 @@ a { color: inherit; }
     margin: 0;
     cursor: pointer;
     z-index: 3;
-    background: rgba(255, 255, 255, 0.32);       /* solid translucent — clean circle */
+    overflow: hidden;                            /* clip icon corners outside circle */
+    background: rgba(37, 53, 74, 0.55);          /* dark translucent — strong circle */
     color: var(--white);
-    transition: background .25s ease, box-shadow .25s ease;
+    transition: background .25s ease;
     display: grid; place-items: center;
     -webkit-tap-highlight-color: transparent;
     appearance: none;
     -webkit-appearance: none;
 }
 .gallery-toggle:focus, .gallery-toggle:focus-visible,
-.gallery-toggle:active, .gallery-toggle:hover { outline: none; border: 0; }
-.gallery-toggle:hover { background: rgba(255, 255, 255, 0.45); }
-.gallery-toggle:focus-visible {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, .8);
-}
+.gallery-toggle:active, .gallery-toggle:hover { outline: none; border: 0; box-shadow: none; }
+.gallery-toggle:hover { background: rgba(37, 53, 74, 0.78); }
 
 .gallery-toggle img {
-    width: 45px; height: 45px;
+    width: 24px; height: 24px;                   /* smaller — sits comfortably inside circle */
     grid-area: 1 / 1;
     transition: opacity .25s ease, transform .3s cubic-bezier(0.4,0,0.2,1);
     pointer-events: none;
