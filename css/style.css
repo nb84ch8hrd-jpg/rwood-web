@@ -371,10 +371,10 @@ a { color: inherit; }
 }
 
 /* Toggle button (+/-) on each tile — Figma 45×45 at bottom-right
-   IMPORTANT: backdrop-filter on a circle-radius element produces a square
-   bounding-box artefact in Chromium. The fix is to put backdrop-filter on a
-   CHILD (.gallery-toggle-bg) and rely on the parent's `overflow: hidden +
-   border-radius: 50%` to clip it perfectly to a circle.  */
+   Solid translucent background (NO backdrop-filter — that produces a
+   rectangular bounding-box artefact in Chromium even with border-radius
+   and overflow:hidden clipping). The visual is intentionally similar to
+   frost glass but rendered as a pure circle. */
 .gallery-toggle {
     position: absolute;
     right: 20px;
@@ -386,31 +386,19 @@ a { color: inherit; }
     margin: 0;
     cursor: pointer;
     z-index: 3;
-    background: transparent;                     /* NO background here */
+    background: rgba(255, 255, 255, 0.32);       /* solid translucent — clean circle */
     color: var(--white);
-    transition: transform .25s ease;
+    transition: background .25s ease, box-shadow .25s ease;
     display: grid; place-items: center;
-    overflow: hidden;                            /* clips the bg pseudo to circle */
-    isolation: isolate;
     -webkit-tap-highlight-color: transparent;
     appearance: none;
     -webkit-appearance: none;
 }
-/* Frost-glass background — inside the clipped circle */
-.gallery-toggle .gallery-toggle-bg {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: rgba(217, 217, 217, 0.22);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    transition: background .25s ease;
-}
 .gallery-toggle:focus, .gallery-toggle:focus-visible,
 .gallery-toggle:active, .gallery-toggle:hover { outline: none; border: 0; }
-.gallery-toggle:hover .gallery-toggle-bg { background: rgba(255,255,255,.28); }
+.gallery-toggle:hover { background: rgba(255, 255, 255, 0.45); }
 .gallery-toggle:focus-visible {
-    box-shadow: 0 0 0 2px rgba(255,255,255,.65);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, .8);
 }
 
 .gallery-toggle img {
