@@ -370,14 +370,12 @@ a { color: inherit; }
     max-width: 366px;
 }
 
-/* Toggle button (+/-) on each tile — Figma 45×45 at bottom-right
-   BULLETPROOF circular button:
-   - explicit border-radius + overflow: hidden (clip ANYTHING that would
-     extend beyond the circle, including IMG icon corners)
-   - dark translucent bg (high contrast — the circle is always visible)
-   - icons sized SMALLER than button so they sit safely inside the circle
-   - no backdrop-filter, no box-shadow, no border (anything that historically
-     produced rectangular artefacts in Chromium) */
+/* Toggle button (+/-) on each tile — PURE CSS, NO IMG/SVG
+   Eliminates every possible source of rectangular artefacts:
+   - no <img> elements (their 45×45 bounding boxes were the square the
+     user kept seeing — transparent SVG corners outside the visible circle)
+   - + and − rendered via 2 ::before/::after lines inside .ico
+   - just a clean circle with two centered lines */
 .gallery-toggle {
     position: absolute;
     right: 20px;
@@ -389,8 +387,7 @@ a { color: inherit; }
     margin: 0;
     cursor: pointer;
     z-index: 3;
-    overflow: hidden;                            /* clip icon corners outside circle */
-    background: rgba(37, 53, 74, 0.55);          /* dark translucent — strong circle */
+    background: rgba(37, 53, 74, 0.55);
     color: var(--white);
     transition: background .25s ease;
     display: grid; place-items: center;
@@ -399,18 +396,40 @@ a { color: inherit; }
     -webkit-appearance: none;
 }
 .gallery-toggle:focus, .gallery-toggle:focus-visible,
-.gallery-toggle:active, .gallery-toggle:hover { outline: none; border: 0; box-shadow: none; }
+.gallery-toggle:active, .gallery-toggle:hover {
+    outline: none; border: 0; box-shadow: none;
+}
 .gallery-toggle:hover { background: rgba(37, 53, 74, 0.78); }
 
-.gallery-toggle img {
-    width: 24px; height: 24px;                   /* smaller — sits comfortably inside circle */
-    grid-area: 1 / 1;
-    transition: opacity .25s ease, transform .3s cubic-bezier(0.4,0,0.2,1);
-    pointer-events: none;
+/* The +/− glyph — drawn purely via ::before (horizontal) and ::after (vertical) */
+.gallery-toggle .ico {
+    position: relative;
+    width: 16px; height: 16px;
+    display: block;
 }
-.gallery-toggle .ico-minus { opacity: 0; transform: rotate(-90deg); }
-.gallery-tile.is-open .gallery-toggle .ico-plus  { opacity: 0; transform: rotate(90deg); }
-.gallery-tile.is-open .gallery-toggle .ico-minus { opacity: 1; transform: rotate(0); }
+.gallery-toggle .ico::before,
+.gallery-toggle .ico::after {
+    content: '';
+    position: absolute;
+    background: var(--white);
+    border-radius: 1px;
+    top: 50%; left: 50%;
+}
+.gallery-toggle .ico::before {
+    /* horizontal stroke — always visible (forms the − sign on its own) */
+    width: 16px; height: 2px;
+    transform: translate(-50%, -50%);
+}
+.gallery-toggle .ico::after {
+    /* vertical stroke — hidden when tile is open (+ becomes −) */
+    width: 2px; height: 16px;
+    transform: translate(-50%, -50%);
+    transition: transform .3s cubic-bezier(0.4,0,0.2,1), opacity .25s ease;
+}
+.gallery-tile.is-open .gallery-toggle .ico::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    opacity: 0;
+}
 
 /* ===============================================================
    REVIEWS — auto-scroll marquee right→left, infinite loop
