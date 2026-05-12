@@ -1,0 +1,28 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Node (in case of future build tools)
+node_modules/
+.npm
+dist/
+build/
+
+# Test outputs
+/tmp/
+
+# Local Claude harness
+.claude/launch.json
+.claude/settings.local.json

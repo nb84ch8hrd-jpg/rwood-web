@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RWOOD — Poctivé stolárstvo. Kuchyne, stavané skrine, schodiská, dvere a záhradný nábytok na mieru.">
+    <meta name="theme-color" content="#25354a">
+    <meta property="og:title" content="RWOOD — Poctivé stolárstvo">
+    <meta property="og:description" content="Kuchyne, skrine, schodiská a nábytok na mieru.">
+    <meta property="og:locale" content="sk_SK">
+    <title>RWOOD — Poctivé stolárstvo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- =================== HEADER (transparent over hero) =================== -->
+<header class="site-header">
+    <div class="header-bg" aria-hidden="true"></div>
+    <div class="canvas">
+        <a href="#" class="logo" aria-label="RWOOD">
+            <img src="assets/logo.svg" alt="RWOOD" width="139" height="28">
+        </a>
+        <nav class="main-nav" aria-label="Hlavná navigácia">
+            <a href="#kontakt">Kontakt</a>
+            <a href="#galeria">Galéria</a>
+            <a href="#recenzie">Recenzie</a>
+            <a href="#ponuka">Ponuka</a>
+        </nav>
+        <a href="#formular" class="btn btn-primary">Nezáväzná ponuka</a>
+        <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+</header>
+
+<!-- =================== HERO (1440 × 810) =================== -->
+<section class="hero" id="domov">
+    <div class="hero-img" role="img" aria-label="Drevený interiér"></div>
+    <div class="canvas hero-canvas">
+        <h1>Poctivé<br>stolárstvo</h1>
+    </div>
+</section>
+
+<!-- =================== OFFER CARD (cream rounded panel) =================== -->
+<section class="section section-offer" id="ponuka">
+    <div class="canvas">
+        <div class="offer-card">
+            <div class="offer-list" id="offerList">
+                <div class="offer-item is-open" data-key="kuchyne">
+                    <button class="offer-head" type="button" aria-expanded="true">
+                        <span class="offer-title">Kuchyne</span>
+                        <img class="chev" src="assets/chev.svg" alt="" width="23" height="14">
+                    </button>
+                    <div class="offer-desc">
+                        <p>Kuchyne na mieru z masívu aj kvalitných dosiek. Premyslené úložné riešenia, kvalitné kovanie a dlhá životnosť. Konzultácia, návrh, výroba aj montáž.</p>
+                    </div>
+                </div>
+                <div class="offer-divider" aria-hidden="true"></div>
+
+                <div class="offer-item" data-key="skrine">
+                    <button class="offer-head" type="button" aria-expanded="false">
+                        <span class="offer-title">Stavané skrine</span>
+                        <img class="chev" src="assets/chev.svg" alt="" width="23" height="14">
+                    </button>
+                    <div class="offer-desc"><p>Skrine na mieru do akéhokoľvek priestoru — vstavané, posuvné, otváracie. Maximálne využitie miesta podľa rozmerov vašej miestnosti.</p></div>
+                </div>
+                <div class="offer-divider" aria-hidden="true"></div>
+
+                <div class="offer-item" data-key="schodisko">
+                    <button class="offer-head" type="button" aria-expanded="false">
+                        <span class="offer-title">Schodisko</span>
+                        <img class="chev" src="assets/chev.svg" alt="" width="23" height="14">
+                    </button>
+                    <div class="offer-desc"><p>Drevené schodiská — rovné, točité, samonosné. Z dubu, jaseňa, buku a iných drevín. Stabilné, krásne a vyrobené na desaťročia.</p></div>
+                </div>
+                <div class="offer-divider" aria-hidden="true"></div>
+
+                <div class="offer-item" data-key="zahrada">
+                    <button class="offer-head" type="button" aria-expanded="false">
+                        <span class="offer-title">Záhradný nábytok</span>
+                        <img class="chev" src="assets/chev.svg" alt="" width="23" height="14">
+                    </button>
+                    <div class="offer-desc"><p>Lavičky, stoly, pergoly, altánky. Z odolných drevín ošetrených proti vlhkosti a poveternosti pre dlhú životnosť v exteriéri.</p></div>
+                </div>
+                <div class="offer-divider" aria-hidden="true"></div>
+
+                <div class="offer-item" data-key="dvere">
+                    <button class="offer-head" type="button" aria-expanded="false">
+                        <span class="offer-title">Dvere a zárubne</span>
+                        <img class="chev" src="assets/chev.svg" alt="" width="23" height="14">
+                    </button>
+                    <div class="offer-desc"><p>Interiérové aj vstupné dvere, obložkové zárubne. Drevené, dyhované, lakované v ľubovoľnej farbe. Atypické rozmery žiadny problém.</p></div>
+                </div>
+                <div class="offer-divider" aria-hidden="true"></div>
+
+                <div class="offer-item" data-key="special">
+                    <button class="offer-head" type="button" aria-expanded="false">
+                        <span class="offer-title">Špeciálne požiadavky</span>
+                        <img class="chev" src="assets/chev.svg" alt="" width="23" height="14">
+                    </button>
+                    <div class="offer-desc"><p>Máte vlastný nápad alebo netradičnú požiadavku? Pošlite nám návrh, fotku alebo skicu — vymyslíme riešenie a dáme cenovú ponuku.</p></div>
+                </div>
+            </div>
+            <div class="offer-image" aria-hidden="true">
+                <div class="offer-image-layer is-active" data-key="kuchyne"   style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1400&q=80')"></div>
+                <div class="offer-image-layer"           data-key="skrine"    style="background-image:url('https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1400&q=80')"></div>
+                <div class="offer-image-layer"           data-key="schodisko" style="background-image:url('https://images.unsplash.com/photo-1503594384566-461fe158e797?auto=format&fit=crop&w=1400&q=80')"></div>
+                <div class="offer-image-layer"           data-key="zahrada"   style="background-image:url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=80')"></div>
+                <div class="offer-image-layer"           data-key="dvere"     style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1400&q=80')"></div>
+                <div class="offer-image-layer"           data-key="special"   style="background-image:url('https://images.unsplash.com/photo-1601057215954-43a2dfd2105e?auto=format&fit=crop&w=1400&q=80')"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =================== GALLERY 3 TILES (static images) =================== -->
+<section class="section section-gallery" id="galeria">
+    <div class="canvas">
+        <div class="gallery">
+            <!-- TILE 1: Stavané skrine -->
+            <div class="gallery-tile" style="background-image:url('https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1400&q=80')">
+                <div class="feature-overlay">
+                    <h3>Stavané skrine</h3>
+                    <p>Maximálne využitie priestoru, posuvné aj otváracie dvere — vstavané do milimetra.</p>
+                </div>
+                <button class="gallery-toggle" type="button" aria-expanded="false" aria-label="Rozbaliť popis">
+                    <span class="gallery-toggle-bg" aria-hidden="true"></span>
+                    <img class="ico-plus"  src="assets/arrow1.svg" alt="" width="45" height="45">
+                    <img class="ico-minus" src="assets/arrow2.svg" alt="" width="45" height="45">
+                </button>
+            </div>
+
+            <!-- TILE 2 (middle, opens with overlay by default) -->
+            <div class="gallery-tile is-open" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1400&q=80')">
+                <div class="feature-overlay">
+                    <h3>Kuchyne</h3>
+                    <p>Premyslené úložné riešenia, kvalitné kovanie a krásny dizajn — všetko ušité na mieru priestoru.</p>
+                </div>
+                <button class="gallery-toggle" type="button" aria-expanded="true" aria-label="Skryť popis">
+                    <span class="gallery-toggle-bg" aria-hidden="true"></span>
+                    <img class="ico-plus"  src="assets/arrow1.svg" alt="" width="45" height="45">
+                    <img class="ico-minus" src="assets/arrow2.svg" alt="" width="45" height="45">
+                </button>
+            </div>
+
+            <!-- TILE 3: Schodisko -->
+            <div class="gallery-tile" style="background-image:url('https://images.unsplash.com/photo-1503594384566-461fe158e797?auto=format&fit=crop&w=1400&q=80')">
+                <div class="feature-overlay">
+                    <h3>Schodisko</h3>
+                    <p>Drevené schodiská — rovné, točité, samonosné. Z dubu, jaseňa či buku, vyrobené na desaťročia.</p>
+                </div>
+                <button class="gallery-toggle" type="button" aria-expanded="false" aria-label="Rozbaliť popis">
+                    <span class="gallery-toggle-bg" aria-hidden="true"></span>
+                    <img class="ico-plus"  src="assets/arrow1.svg" alt="" width="45" height="45">
+                    <img class="ico-minus" src="assets/arrow2.svg" alt="" width="45" height="45">
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =================== REVIEWS (auto-scroll right→left, infinite loop) =================== -->
+<section class="section section-reviews" id="recenzie" aria-label="Recenzie">
+    <div class="reviews-marquee">
+        <div class="reviews-track">
+            <!-- Track A: real cards -->
+            <article class="review-card"><h3>Milan Dubec</h3><p class="quote">„Super práca, nadčasový dizajn"</p><time>18.10.2025</time></article>
+            <article class="review-card"><h3>Janka Horváthová</h3><p class="quote">„Skriňa do podkrovia presne podľa predstáv."</p><time>02.09.2025</time></article>
+            <article class="review-card"><h3>Peter Krajči</h3><p class="quote">„Schodisko z dubu — paráda, montáž v jednom dni."</p><time>21.07.2025</time></article>
+            <article class="review-card"><h3>Mária Kováčová</h3><p class="quote">„Záhradný nábytok vydržal dve zimy bez ujmy."</p><time>14.05.2025</time></article>
+            <article class="review-card"><h3>Ján Novotný</h3><p class="quote">„Kvalita, termín, komunikácia — všetko top."</p><time>02.03.2025</time></article>
+            <article class="review-card"><h3>Andrea Šebová</h3><p class="quote">„Vstavané skrine v celom byte. Odporúčam!"</p><time>14.01.2025</time></article>
+            <!-- Track B: duplicate for seamless loop (aria-hidden) -->
+            <article class="review-card" aria-hidden="true"><h3>Milan Dubec</h3><p class="quote">„Super práca, nadčasový dizajn"</p><time>18.10.2025</time></article>
+            <article class="review-card" aria-hidden="true"><h3>Janka Horváthová</h3><p class="quote">„Skriňa do podkrovia presne podľa predstáv."</p><time>02.09.2025</time></article>
+            <article class="review-card" aria-hidden="true"><h3>Peter Krajči</h3><p class="quote">„Schodisko z dubu — paráda, montáž v jednom dni."</p><time>21.07.2025</time></article>
+            <article class="review-card" aria-hidden="true"><h3>Mária Kováčová</h3><p class="quote">„Záhradný nábytok vydržal dve zimy bez ujmy."</p><time>14.05.2025</time></article>
+            <article class="review-card" aria-hidden="true"><h3>Ján Novotný</h3><p class="quote">„Kvalita, termín, komunikácia — všetko top."</p><time>02.03.2025</time></article>
+            <article class="review-card" aria-hidden="true"><h3>Andrea Šebová</h3><p class="quote">„Vstavané skrine v celom byte. Odporúčam!"</p><time>14.01.2025</time></article>
+        </div>
+    </div>
+</section>
+
+<!-- =================== IMAGE GRID (2 stacked + 1 large, ROTATING) =================== -->
+<section class="section section-imggrid">
+    <div class="canvas">
+        <div class="imggrid">
+            <div class="imggrid-col">
+                <div class="imggrid-tile imggrid-half">
+                    <div class="g-img g-img-1" style="background-image:url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1400&q=80')"></div>
+                    <div class="g-img g-img-2" style="background-image:url('https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1400&q=80')"></div>
+                    <div class="g-img g-img-3" style="background-image:url('https://images.unsplash.com/photo-1556909195-da37e2f33b8c?auto=format&fit=crop&w=1400&q=80')"></div>
+                </div>
+                <div class="imggrid-tile imggrid-half">
+                    <div class="g-img g-img-1" style="background-image:url('https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1400&q=80')"></div>
+                    <div class="g-img g-img-2" style="background-image:url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80')"></div>
+                    <div class="g-img g-img-3" style="background-image:url('https://images.unsplash.com/photo-1582582494705-f8ce0b0c24f0?auto=format&fit=crop&w=1400&q=80')"></div>
+                </div>
+            </div>
+            <div class="imggrid-col">
+                <div class="imggrid-tile imggrid-tall">
+                    <div class="g-img g-img-1" style="background-image:url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80')"></div>
+                    <div class="g-img g-img-2" style="background-image:url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80')"></div>
+                    <div class="g-img g-img-3" style="background-image:url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=80')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =================== FORM (grey rounded panel) =================== -->
+<section class="section section-form" id="formular">
+    <div class="canvas">
+        <div class="form-card">
+            <form class="contact-form" id="contactForm" novalidate>
+                <fieldset class="chips">
+                    <legend class="visually-hidden">Druh zákazky</legend>
+                    <label class="chip"><input type="radio" name="kategoria" value="Kuchyne" checked><span>Kuchyne</span></label>
+                    <label class="chip"><input type="radio" name="kategoria" value="Stavané skrine"><span>Stavané skrine</span></label>
+                    <label class="chip"><input type="radio" name="kategoria" value="Schodisko"><span>Schodisko</span></label>
+                    <label class="chip"><input type="radio" name="kategoria" value="Záhradný nábytok"><span>Záhradný nábytok</span></label>
+                    <label class="chip"><input type="radio" name="kategoria" value="Špeciálne požiadavky"><span>Špeciálne požiadavky</span></label>
+                </fieldset>
+
+                <div class="field">
+                    <label for="meno">Meno Priezvisko</label>
+                    <input type="text" id="meno" name="meno" required autocomplete="name" minlength="2" maxlength="80">
+                    <small class="error" id="err-meno"></small>
+                </div>
+
+                <div class="field">
+                    <label for="telefon">Telefónne číslo</label>
+                    <input type="tel" id="telefon" name="telefon" required autocomplete="tel" pattern="^[+0-9 ()\-]{9,20}$">
+                    <small class="error" id="err-telefon"></small>
+                </div>
+
+                <div class="field">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required autocomplete="email">
+                    <small class="error" id="err-email"></small>
+                </div>
+
+                <div class="field">
+                    <label for="poznamka">Poznámka <span class="optional">(rozmery, materiál, termín, link na inšpiráciu…)</span></label>
+                    <textarea id="poznamka" name="poznamka" rows="4" maxlength="2000" placeholder="Napíšte čo si predstavujete…"></textarea>
+                    <small class="hint" id="cnt-poznamka">0 / 2000</small>
+                </div>
+
+                <div class="form-consent">
+                    <label class="check">
+                        <input type="checkbox" id="suhlas" name="suhlas" required>
+                        <span>Súhlasím so <a href="legal/ochrana-osobnych-udajov.html" target="_blank" rel="noopener">spracovaním osobných údajov</a> a <a href="legal/obchodne-podmienky.html" target="_blank" rel="noopener">obchodnými podmienkami</a>.</span>
+                    </label>
+                    <small class="error" id="err-suhlas"></small>
+                </div>
+
+                <!-- honeypot -->
+                <div class="hp" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                </div>
+
+                <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+
+                <button type="submit" class="btn btn-primary btn-submit">Odoslať nezáväznú ponuku</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- =================== KONTAKT =================== -->
+<section class="section section-contact" id="kontakt">
+    <div class="canvas">
+        <h2 class="section-title">Kontakt</h2>
+        <div class="contact-grid">
+            <div>
+                <h3>Adresa</h3>
+                <p>RWOOD s.r.o.<br>Hlavná 123<br>010 01 Žilina<br>Slovenská republika</p>
+            </div>
+            <div>
+                <h3>Spojte sa</h3>
+                <p><a href="tel:+421900000000">+421 900 000 000</a><br><a href="mailto:info@rwood.sk">info@rwood.sk</a></p>
+            </div>
+            <div>
+                <h3>Fakturácia</h3>
+                <p>IČO: 00 000 000<br>DIČ: 0000000000<br>IČ DPH: SK0000000000<br>OR OS Žilina, Sro 00000/L</p>
+            </div>
+            <div>
+                <h3>Otváracie hodiny</h3>
+                <p>Po – Pi: 8:00 – 17:00<br>So: po dohode<br>Ne: zatvorené</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =================== FOOTER =================== -->
+<footer class="site-footer">
+    <div class="canvas footer-inner">
+        <div class="footer-col">
+            <img src="assets/logo.svg" alt="RWOOD" width="139" height="28" class="footer-logo">
+            <p>Poctivé stolárstvo na mieru.<br>Žilina, Slovensko</p>
+        </div>
+        <div class="footer-col">
+            <h4>Web</h4>
+            <ul>
+                <li><a href="#ponuka">Ponuka</a></li>
+                <li><a href="#galeria">Galéria</a></li>
+                <li><a href="#recenzie">Recenzie</a></li>
+                <li><a href="#formular">Nezáväzná ponuka</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="legal/obchodne-podmienky.html">Obchodné podmienky</a></li>
+                <li><a href="legal/ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></li>
+                <li><a href="legal/cookies.html">Zásady cookies</a></li>
+                <li><a href="legal/reklamacny-poriadok.html">Reklamačný poriadok</a></li>
+                <li><a href="legal/odstupenie-od-zmluvy.html">Odstúpenie od zmluvy</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Spory</h4>
+            <p>Spotrebiteľ má právo obrátiť sa na <a href="https://www.soi.sk" target="_blank" rel="noopener">SOI</a> alebo využiť <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ODR platformu EÚ</a>.</p>
+            <p><button type="button" class="link-btn" id="openCookieSettings">Nastavenia cookies</button></p>
+        </div>
+    </div>
+    <div class="canvas footer-bottom">
+        <p>&copy; <span id="year"></span> RWOOD s.r.o. — Všetky práva vyhradené.</p>
+    </div>
+</footer>
+
+<!-- =================== COOKIE BANNER =================== -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-labelledby="cookieTitle" aria-describedby="cookieDesc" hidden>
+    <div class="cookie-inner">
+        <div class="cookie-text">
+            <h2 id="cookieTitle">Vážime si vaše súkromie</h2>
+            <p id="cookieDesc">Používame cookies na fungovanie webu, analýzu návštevnosti a (s vaším súhlasom) marketing. Nevyhnutné sú vždy aktívne. Viac v <a href="legal/cookies.html">zásadách cookies</a>.</p>
+        </div>
+        <div class="cookie-options" id="cookieOptions" hidden>
+            <label class="check"><input type="checkbox" checked disabled> <span>Nevyhnutné <small>(vždy)</small></span></label>
+            <label class="check"><input type="checkbox" id="ckPref"> <span>Preferenčné</span></label>
+            <label class="check"><input type="checkbox" id="ckStat"> <span>Štatistické</span></label>
+            <label class="check"><input type="checkbox" id="ckMark"> <span>Marketingové</span></label>
+        </div>
+        <div class="cookie-actions">
+            <button type="button" class="btn btn-ghost" id="cookieReject">Odmietnuť všetky</button>
+            <button type="button" class="btn btn-ghost" id="cookieCustomize">Prispôsobiť</button>
+            <button type="button" class="btn btn-ghost" id="cookieSave" hidden>Uložiť výber</button>
+            <button type="button" class="btn btn-primary" id="cookieAccept">Prijať všetky</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

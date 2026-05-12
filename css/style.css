@@ -1,0 +1,853 @@
+/* ==========================================================================
+   RWOOD — pixel-perfect to Figma (node 1:2, canvas 1440 × 4128)
+   Brand: navy #25354A · cream #FBF7EF · grey #929AA4 · grey-soft rgba(217,217,217,.2)
+   Type:  Roboto Flex (Bold 700, Medium 500, Regular 400)
+   Radius: 20 (panels) · 200 (pills) · 10 (form fields)
+   ========================================================================== */
+
+:root {
+    --navy:    #25354A;
+    --cream:   #FBF7EF;
+    --grey:    #929AA4;
+    --grey-soft: rgba(217, 217, 217, 0.2);
+    --white:   #ffffff;
+    --text:    #25354A;
+    --error:   #FFD6D6;
+
+    --radius:  20px;
+    --radius-md: 12px;
+    --radius-sm: 10px;
+    --radius-pill: 200px;
+
+    --font:    'Roboto Flex', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --canvas-w: 1440px;
+    --inner-pad: clamp(20px, 6vw, 89px);          /* Figma 89px on desktop, ≤20 mobile */
+
+    /* Typographic scale — fluid clamp(mobile, viewport, desktop) */
+    --fs-hero:    clamp(48px, 9vw, 116px);        /* H1 hero — Figma 116px */
+    --fs-title:   clamp(28px, 4.4vw, 35px);       /* H2/H3 section titles — Figma 35px */
+    --fs-h4:      clamp(16px, 1.4vw, 18px);
+    --fs-body:    15px;
+    --fs-small:   13px;
+    --fs-cta-lg:  clamp(16px, 1.6vw, 19.76px);    /* "Odoslať nezáväznú ponuku" — Figma 19.76px */
+
+    /* Spacing rhythm (8-pt scale) */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 24px;
+    --sp-6: 32px;
+    --sp-7: 40px;
+    --sp-8: 60px;
+    --sp-9: 80px;
+    --section-gap: clamp(32px, 5vw, 40px);
+}
+
+* , *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+    margin: 0;
+    background: var(--white);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+img, svg { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; }
+a { color: inherit; }
+
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* shared 1440 canvas — left/right padding so content lives in the 1262 visual band */
+.canvas {
+    max-width: var(--canvas-w);
+    margin: 0 auto;
+    padding: 0 var(--inner-pad);
+}
+
+/* Buttons (pill, Roboto Flex Bold) — color-only hover, no movement */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;             /* a11y tap target */
+    padding: 14px 22px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: background .25s ease, border-color .25s ease, color .25s ease;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+}
+.btn-primary { background: var(--navy); color: var(--white); }
+.btn-primary:hover { background: #324760; }                /* len jemný posun farby — žiadny lift */
+.btn-primary:active { background: #1c2a3c; }
+.btn-ghost { background: transparent; color: var(--navy); border-color: var(--navy); }
+.btn-ghost:hover { background: var(--navy); color: var(--white); }
+.btn-lg { min-height: 52px; padding: 18px 26px; font-size: 17px; }
+.link-btn { background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; font: inherit; }
+
+/* ===============================================================
+   HEADER — sticky, transparent over hero with subtle blur
+   Figma: 1440×70 with #d9d9d9 @ 20%, logo x:109 y:21, nav x:783..1070, CTA x:1154 y:14
+   =============================================================== */
+.site-header {
+    position: sticky;
+    top: 0;
+    height: 70px;
+    z-index: 100;
+    margin-bottom: -70px;       /* hero starts at y:0 under header */
+}
+.header-bg {
+    position: absolute; inset: 0;
+    background: var(--grey-soft);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    z-index: 0;
+}
+/* Always frost-glass — no navy override on scroll */
+.site-header .canvas {
+    position: relative; z-index: 1;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+.logo { display: inline-block; line-height: 0; }
+.logo img { width: 139px; height: 28px; filter: brightness(0) invert(1); transition: opacity .2s ease; }
+.logo:hover img { opacity: .85; }
+
+.main-nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-right: 28px;
+}
+.main-nav a {
+    color: rgba(255, 255, 255, .78);             /* tlmený biely odtieň */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1;
+    padding: 8px 0;
+    transition: color .2s ease, transform .2s ease;
+    white-space: nowrap;
+}
+.main-nav a:hover,
+.main-nav a:focus-visible {
+    color: var(--white);                         /* len odtieň: tlmené → plné biele */
+    transform: translateY(-1px);                 /* jemné nadvyhnutie */
+}
+
+.menu-toggle { display: none; background: none; border: 0; width: 36px; height: 36px; margin-left: auto; }
+.menu-toggle span { display: block; height: 2px; background: var(--white); margin: 6px 0; transition: transform .2s ease, opacity .2s ease; }
+.menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ===============================================================
+   HERO — 1440 × 810, headline at x:109 y:317
+   =============================================================== */
+.hero {
+    position: relative;
+    height: 810px;
+    overflow: hidden;
+    isolation: isolate;
+}
+.hero-img {
+    position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(37,53,74,0.15) 0%, rgba(37,53,74,0.25) 60%, rgba(37,53,74,0.5) 100%),
+                url('../assets/hero.png') center/cover no-repeat;
+}
+.hero-canvas {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+.hero h1 {
+    margin: clamp(140px, 22vw, 317px) 0 0;
+    font-weight: 700;
+    font-size: var(--fs-hero);
+    line-height: 0.85;
+    color: var(--white);
+    letter-spacing: -0.01em;
+    max-width: 720px;
+}
+
+/* ===============================================================
+   OFFER CARD — cream panel 1262×710, accordion + image right
+   Figma: card x:88 y:850 size 1262×710. Inner content x:171 y:974 (so left pad ~83px from card edge)
+   =============================================================== */
+.section { padding: 0; }
+.section + .section { margin-top: 40px; }
+.section-offer { margin-top: 40px; }
+
+.offer-card {
+    display: grid;
+    grid-template-columns: 632px 1fr;
+    background: var(--cream);
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 710px;                    /* FIXED — no jumping when accordion toggles */
+}
+.offer-list {
+    padding: 100px 50px 100px 82px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;   /* items distributed evenly within fixed height */
+    gap: 0;
+    height: 100%;
+    overflow: hidden;
+}
+.offer-item {
+    padding: 0;
+    flex: 0 0 auto;
+}
+.offer-head {
+    width: 100%;
+    background: none; border: 0; padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    text-align: left;
+    color: var(--navy);
+}
+/* No focus outline pill — rely on chevron + description for active state */
+.offer-head:focus { outline: none; }
+.offer-head:focus-visible {
+    outline: none;
+    /* Subtle navy left-edge indicator only on keyboard nav */
+    box-shadow: -16px 0 0 -14px var(--navy);
+}
+.offer-title {
+    font-weight: 700;
+    font-size: var(--fs-title);
+    line-height: 0.95;
+    color: var(--navy);                        /* all items same navy color */
+    letter-spacing: -0.01em;
+    transition: color .2s ease;
+}
+/* Hover: subtle tint shift only — no movement, no nudge */
+.offer-item:not(.is-open):hover .offer-title {
+    color: #4b6079;                            /* slightly lighter navy on hover */
+}
+.chev {
+    width: 18px; height: auto;
+    color: var(--navy);
+    opacity: .55;
+    transition: transform .35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity .25s ease;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+.offer-item:hover .chev { opacity: .9; }
+.offer-item.is-open .chev { transform: rotate(180deg); opacity: 1; }
+
+/* Smooth height animation using grid-template-rows trick (0fr → 1fr) — Apple timing */
+.offer-desc {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows .35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity .25s ease .05s,
+                padding-top .35s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--navy);
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 396px;
+    padding-top: 0;
+}
+.offer-desc > p { overflow: hidden; margin: 0; min-height: 0; }
+.offer-item.is-open .offer-desc {
+    grid-template-rows: 1fr;
+    padding-top: 14px;
+    opacity: 1;
+    transition: grid-template-rows .35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity .25s ease .15s,
+                padding-top .35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.offer-divider {
+    height: 1px;
+    background: var(--grey);
+    width: 451px;
+    max-width: 100%;
+    flex: 0 0 1px;
+}
+
+/* Right-side image stage — 6 stacked layers, one per service.
+   Apple-style snappy crossfade (~350ms) with subtle Ken-Burns zoom. */
+.offer-image {
+    position: relative;
+    height: 710px;
+    overflow: hidden;
+    background: var(--cream);
+}
+.offer-image-layer {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity .35s cubic-bezier(0.4, 0, 0.2, 1),
+                transform .7s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+    pointer-events: none;
+}
+.offer-image-layer.is-active {
+    opacity: 1;
+    transform: scale(1.0);
+    pointer-events: auto;
+}
+
+/* ===============================================================
+   GALLERY — 3 tiles 406×515, middle has overlay panel + arrow circles
+   Figma: tile1 x:89, tile2 x:517, tile3 x:945, y:1600
+   overlay at x:517 y:1748 size 406×367 — text x:537 y:1802 "Kuchyne"
+   arrows at x:430,858,1285 y:2050 size 45 — these sit ON THE TILE EDGE (right corner)
+   =============================================================== */
+.section-gallery { margin-top: 40px; }
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;     /* 517-89-406 = 22 */
+}
+.gallery-tile {
+    position: relative;
+    height: 515px;
+    background: var(--cream) center/cover no-repeat;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+/* Milky frosted overlay panel — Figma: 406×367 at bottom of tile (y:1748 in 1600+515 box)
+   Animation: circular clip-path reveal from + button corner (right:20 bottom:20, r:22.5)
+   Closed: tiny circle behind the button (invisible since button sits over it)
+   Open:   large circle covering the whole overlay area
+*/
+.feature-overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 367px;
+    z-index: 2;                          /* above slideshow image layers */
+    background: var(--grey-soft);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    padding: 54px 30px 30px 20px;        /* h3 at y:1802 = 54 from overlay top */
+    color: var(--white);
+    clip-path: circle(22px at calc(100% - 42.5px) calc(100% - 42.5px));
+    -webkit-clip-path: circle(22px at calc(100% - 42.5px) calc(100% - 42.5px));
+    transition: clip-path .55s cubic-bezier(.2,.8,.2,1),
+                -webkit-clip-path .55s cubic-bezier(.2,.8,.2,1);
+    will-change: clip-path;
+    opacity: 1;
+}
+.gallery-tile.is-open .feature-overlay {
+    clip-path: circle(135% at calc(100% - 42.5px) calc(100% - 42.5px));
+    -webkit-clip-path: circle(135% at calc(100% - 42.5px) calc(100% - 42.5px));
+}
+.feature-overlay h3 {
+    margin: 0 0 16px;
+    font-weight: 700;
+    font-size: var(--fs-title);
+    line-height: 0.9;
+}
+.feature-overlay p {
+    margin: 0;
+    font-size: var(--fs-body);
+    line-height: 1.45;
+    max-width: 366px;
+}
+
+/* Toggle button (+/-) on each tile — Figma 45×45 at bottom-right
+   IMPORTANT: backdrop-filter on a circle-radius element produces a square
+   bounding-box artefact in Chromium. The fix is to put backdrop-filter on a
+   CHILD (.gallery-toggle-bg) and rely on the parent's `overflow: hidden +
+   border-radius: 50%` to clip it perfectly to a circle.  */
+.gallery-toggle {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    z-index: 3;
+    background: transparent;                     /* NO background here */
+    color: var(--white);
+    transition: transform .25s ease;
+    display: grid; place-items: center;
+    overflow: hidden;                            /* clips the bg pseudo to circle */
+    isolation: isolate;
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+}
+/* Frost-glass background — inside the clipped circle */
+.gallery-toggle .gallery-toggle-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(217, 217, 217, 0.22);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    transition: background .25s ease;
+}
+.gallery-toggle:focus, .gallery-toggle:focus-visible,
+.gallery-toggle:active, .gallery-toggle:hover { outline: none; border: 0; }
+.gallery-toggle:hover .gallery-toggle-bg { background: rgba(255,255,255,.28); }
+.gallery-toggle:focus-visible {
+    box-shadow: 0 0 0 2px rgba(255,255,255,.65);
+}
+
+.gallery-toggle img {
+    width: 45px; height: 45px;
+    grid-area: 1 / 1;
+    transition: opacity .25s ease, transform .3s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+}
+.gallery-toggle .ico-minus { opacity: 0; transform: rotate(-90deg); }
+.gallery-tile.is-open .gallery-toggle .ico-plus  { opacity: 0; transform: rotate(90deg); }
+.gallery-tile.is-open .gallery-toggle .ico-minus { opacity: 1; transform: rotate(0); }
+
+/* ===============================================================
+   REVIEWS — auto-scroll marquee right→left, infinite loop
+   Track contains real cards + duplicate (aria-hidden) for seamless wrap.
+   Figma: cards 406×228, gap 22px → one half = 6 cards × 428 = 2568px
+   =============================================================== */
+.section-reviews {
+    margin-top: 40px;
+    overflow: hidden;
+    /* fade edges so cards softly enter/leave */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+}
+.reviews-marquee {
+    overflow: hidden;
+}
+.reviews-track {
+    display: flex;
+    gap: 22px;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+    will-change: transform;
+}
+.reviews-marquee:hover .reviews-track,
+.reviews-track:focus-within { animation-play-state: paused; }
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-50% - 11px)); }   /* 50% of doubled track + half-gap */
+}
+
+.review-card {
+    flex: 0 0 406px;
+    width: 406px;
+    height: 228px;
+    background: var(--cream);
+    border-radius: var(--radius);
+    padding: 23px 28px;
+    color: var(--navy);
+    display: flex;
+    flex-direction: column;
+}
+.review-card h3 {
+    margin: 0 0 18px;
+    font-weight: 700;
+    font-size: var(--fs-title);
+    line-height: 0.9;
+}
+.review-card .quote {
+    margin: 0;
+    font-size: var(--fs-body);
+    line-height: 1.45;
+    flex: 1;
+}
+.review-card time {
+    align-self: flex-end;
+    font-size: var(--fs-small);
+    line-height: 1;
+    opacity: .75;
+}
+
+/* ===============================================================
+   IMAGE GRID — 2 stacked on left + 1 tall on right (with rotating slideshow)
+   Figma: left col x:89 size 619×348 y:2413 and y:2783
+          right col x:731 size 620×718 y:2413
+   =============================================================== */
+.section-imggrid { margin-top: 40px; }
+.imggrid {
+    display: grid;
+    grid-template-columns: 619fr 620fr;
+    gap: 22px;
+}
+.imggrid-col { display: flex; flex-direction: column; gap: 22px; }
+.imggrid-tile {
+    position: relative;
+    background: var(--cream);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.imggrid-half { height: 348px; }
+.imggrid-tall { height: 718px; }
+
+/* Slideshow inside each imggrid-tile — 3 layers crossfade in an 18s cycle.
+   Each image visible ~5s, fade 1s. */
+.imggrid-tile .g-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: gallerySlideshow 18s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes gallerySlideshow {
+    0%     { opacity: 0; }
+    5.56%  { opacity: 1; }   /* 1s fade in */
+    27.78% { opacity: 1; }   /* visible 1s → 5s */
+    33.33% { opacity: 0; }   /* 1s fade out, gone by 6s */
+    100%   { opacity: 0; }
+}
+
+/* Within EACH tile: 3 layers staggered every 6s of the 18s cycle */
+.imggrid-tile .g-img-1 { animation-delay: -1s; }
+.imggrid-tile .g-img-2 { animation-delay:  5s; }
+.imggrid-tile .g-img-3 { animation-delay: 11s; }
+
+/* Stagger across the 3 tiles so they don't swap in unison */
+.imggrid-col:nth-child(1) .imggrid-tile:nth-child(1) .g-img-1 { animation-delay: -1s; }
+.imggrid-col:nth-child(1) .imggrid-tile:nth-child(1) .g-img-2 { animation-delay:  5s; }
+.imggrid-col:nth-child(1) .imggrid-tile:nth-child(1) .g-img-3 { animation-delay: 11s; }
+
+.imggrid-col:nth-child(1) .imggrid-tile:nth-child(2) .g-img-1 { animation-delay: -3s; }
+.imggrid-col:nth-child(1) .imggrid-tile:nth-child(2) .g-img-2 { animation-delay:  3s; }
+.imggrid-col:nth-child(1) .imggrid-tile:nth-child(2) .g-img-3 { animation-delay:  9s; }
+
+.imggrid-col:nth-child(2) .imggrid-tile:nth-child(1) .g-img-1 { animation-delay: -5s; }
+.imggrid-col:nth-child(2) .imggrid-tile:nth-child(1) .g-img-2 { animation-delay:  1s; }
+.imggrid-col:nth-child(2) .imggrid-tile:nth-child(1) .g-img-3 { animation-delay:  7s; }
+
+/* ===============================================================
+   FORM PANEL — grey rounded panel 1262×710
+   Figma: card y:3171, chips y:3261 (inside x:126..705),
+   inputs y:3372, 3488, 3590 size 582×59
+   submit at x:1025 y:3795 size 306×53
+   =============================================================== */
+.section-form { margin-top: var(--section-gap); padding-bottom: var(--sp-8); }
+.form-card {
+    position: relative;
+    background: var(--grey);
+    border-radius: var(--radius);
+    padding: clamp(40px, 6vw, 90px) clamp(28px, 6vw, 89px) clamp(40px, 6vw, 89px);
+    color: var(--white);
+    min-height: 710px;
+}
+.chips {
+    border: 0; padding: 0; margin: 0 0 var(--sp-7);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.chip { cursor: pointer; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 22px;
+    border-radius: var(--radius-pill);
+    background: rgba(255,255,255,0);
+    border: 1px solid var(--navy);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1;
+    transition: background .2s ease, transform .15s ease, border-color .2s ease;
+}
+.chip input:checked + span { background: var(--navy); border-color: var(--navy); }
+.chip input:focus-visible + span { outline: 2px solid var(--cream); outline-offset: 2px; }
+.chip:hover span { background: rgba(255,255,255,.06); transform: translateY(-1px); }
+
+.field { margin-bottom: var(--sp-6); max-width: 582px; }
+.field label {
+    display: block;
+    font-size: var(--fs-body);
+    color: var(--white);
+    margin-bottom: var(--sp-3);
+    line-height: 1;
+}
+.field input,
+.field textarea {
+    width: 100%;
+    min-height: 54px;
+    background: rgba(255,255,255,0);
+    border: 1px solid var(--navy);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    color: var(--white);
+    font-family: inherit;
+    font-size: var(--fs-body);
+    transition: border-color .2s, background .2s;
+}
+.field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,.65); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--cream); background: rgba(37,53,74,.35); }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: #FFB0B0; background: rgba(192,48,48,.18); }
+.field textarea {
+    min-height: 120px;
+    padding: 16px 20px;
+    resize: vertical;
+    line-height: 1.5;
+    font-family: inherit;
+}
+.field .optional { opacity: .7; font-weight: 400; }
+.error { display: block; min-height: 1.1em; color: var(--error); font-size: var(--fs-small); margin-top: 6px; }
+.hint { display: block; text-align: right; color: rgba(255,255,255,.65); font-size: 12px; margin-top: 4px; }
+
+.form-consent { max-width: 582px; margin: var(--sp-2) 0 var(--sp-5); }
+.check { display: flex; align-items: flex-start; gap: var(--sp-3); cursor: pointer; }
+.check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--navy); flex-shrink: 0; }
+.check span { font-size: 14px; line-height: 1.45; }
+.check a { color: var(--white); text-decoration: underline; }
+
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.btn-submit {
+    position: absolute;
+    right: clamp(28px, 6vw, 89px);
+    bottom: clamp(40px, 6vw, 89px);
+    min-height: 52px;
+    padding: 18px 26px;
+    font-size: var(--fs-cta-lg);
+}
+.form-status { font-weight: 500; }
+.form-status.ok { color: #C8EFD2; }
+.form-status.err { color: #FFD6D6; }
+
+/* ===============================================================
+   KONTAKT (light section below grey form, in Figma not present but added)
+   =============================================================== */
+.section-contact { margin-top: var(--sp-9); padding-bottom: var(--sp-7); }
+.section-title { font-size: var(--fs-title); font-weight: 700; color: var(--navy); margin: 0 0 var(--sp-6); line-height: 0.9; }
+.contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-6); }
+.contact-grid h3 { font-size: var(--fs-h4); margin: 0 0 var(--sp-2); color: var(--navy); font-weight: 700; }
+.contact-grid p { margin: 0; font-size: var(--fs-body); line-height: 1.6; color: var(--navy); }
+.contact-grid a { color: var(--navy); }
+.contact-grid a:hover { opacity: .7; }
+
+/* ===============================================================
+   FOOTER — extends below
+   =============================================================== */
+.site-footer { background: var(--navy); color: var(--white); margin-top: 60px; padding: 60px 0 20px; }
+.footer-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+}
+.footer-col h4 { margin: 14px 0 12px; font-size: 16px; font-weight: 700; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col li { margin-bottom: 6px; }
+.footer-col a { color: var(--white); text-decoration: none; opacity: .85; font-size: 14px; }
+.footer-col a:hover { opacity: 1; text-decoration: underline; }
+.footer-col p { margin: 0 0 10px; opacity: .85; font-size: 14px; }
+.footer-logo { filter: brightness(0) invert(1); margin-bottom: 8px; }
+.footer-bottom { padding-top: 20px; font-size: 13px; opacity: .75; }
+
+/* ===============================================================
+   COOKIE BANNER — centered bottom
+   =============================================================== */
+.cookie-banner {
+    position: fixed;
+    left: 16px; right: 16px; bottom: 16px;
+    max-width: 980px;
+    margin: 0 auto;
+    background: var(--white);
+    color: var(--navy);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    z-index: 100;
+}
+.cookie-inner { display: grid; gap: 16px; }
+.cookie-text h2 { font-size: 20px; margin: 0 0 6px; }
+.cookie-text p { margin: 0; font-size: 14px; line-height: 1.5; }
+.cookie-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.cookie-options .check span small { opacity: .65; }
+.cookie-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+
+/* ===============================================================
+   LEGAL PAGES — single-column readable text
+   =============================================================== */
+.legal-page { max-width: 860px; margin: 0 auto; padding: 80px var(--inner-pad); }
+.legal-page h1 { font-size: 44px; margin: 0 0 8px; color: var(--navy); font-weight: 700; line-height: 0.9; }
+.legal-page .updated { color: var(--grey); font-size: 14px; margin: 0 0 32px; }
+.legal-page h2 { color: var(--navy); margin-top: 32px; font-size: 22px; }
+.legal-page h3 { color: var(--navy); margin-top: 22px; font-size: 18px; }
+.legal-page p, .legal-page li { font-size: 15.5px; line-height: 1.65; color: var(--navy); }
+.legal-page ul, .legal-page ol { padding-left: 22px; }
+.legal-page a { color: var(--navy); }
+.legal-page table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+.legal-page th, .legal-page td { border: 1px solid rgba(37,53,74,.2); padding: 10px 12px; text-align: left; vertical-align: top; color: var(--navy); }
+.legal-page th { background: var(--cream); }
+.legal-back { display: inline-block; margin-bottom: 24px; color: var(--navy); text-decoration: none; font-weight: 500; }
+.legal-back:hover { text-decoration: underline; }
+/* On legal pages (no hero), give the header a solid navy background */
+body:has(.legal-page) .site-header { margin-bottom: 0; background: var(--navy); position: sticky; top: 0; }
+body:has(.legal-page) .header-bg { background: var(--navy); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.legal-page + .site-footer { margin-top: 60px; }
+
+/* ===============================================================
+   RESPONSIVE — 3 breakpoints
+   tablet:  ≤ 1024px (stacked card + nav still visible)
+   mobile:  ≤ 720px  (hamburger menu, single column)
+   small:   ≤ 420px  (typography & padding compression)
+   =============================================================== */
+
+/* TABLET ≤ 1024 ================================================ */
+@media (max-width: 1024px) {
+    .main-nav { gap: 0; margin-right: var(--sp-3); }
+    .main-nav a { padding: 8px 10px; }
+
+    .offer-card { grid-template-columns: 1fr; height: auto; min-height: auto; }
+    .offer-list { padding: 48px 40px; height: auto; gap: 22px; }
+    .offer-image { height: 380px; }
+    .offer-divider { width: 100%; }
+
+    .gallery { grid-template-columns: 1fr 1fr; }
+    .gallery-tile:last-child { display: none; }
+
+    .imggrid { grid-template-columns: 1fr; }
+    .imggrid-tall { height: 480px; }
+
+    .form-card { min-height: auto; padding: 48px 40px 110px; }
+    .btn-submit { right: 40px; bottom: 40px; }
+
+    .contact-grid { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .cookie-options { grid-template-columns: 1fr 1fr; }
+}
+
+/* MOBILE ≤ 720 ================================================= */
+@media (max-width: 720px) {
+    .site-header { height: 64px; margin-bottom: -64px; }
+    .site-header .canvas { height: 64px; gap: 12px; }
+    .logo img { width: 110px; height: auto; }
+
+    .menu-toggle { display: block; margin-left: auto; }
+    .main-nav {
+        position: absolute; top: 64px; left: 0; right: 0;
+        background: rgba(37,53,74,.96);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        flex-direction: column;
+        align-items: stretch;
+        padding: var(--sp-4) var(--inner-pad) var(--sp-5);
+        gap: 0;
+        margin: 0;
+        display: none;
+    }
+    .main-nav.open { display: flex; }
+    .main-nav a {
+        padding: 14px 12px;
+        margin: 0;
+        text-align: left;
+        font-size: 16px;
+        opacity: 1;
+        border-radius: var(--radius-md);
+    }
+    .site-header .canvas .btn-primary { display: none; }
+
+    .hero { height: auto; min-height: 520px; padding-bottom: 80px; }
+    .hero h1 { margin-top: 140px; }
+
+    .offer-list { padding: 36px 24px; gap: 18px; }
+    .offer-image { height: 320px; }
+
+    .gallery { grid-template-columns: 1fr; gap: 16px; }
+    .gallery-tile { height: 360px; }
+    .gallery-tile:last-child { display: block; }
+    .feature-overlay { height: auto; min-height: 60%; padding: 32px 20px 28px; }
+
+    .review-card { flex: 0 0 280px; width: 280px; height: auto; min-height: 200px; padding: 22px; }
+    .reviews-track { gap: 16px; }
+    @keyframes marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(calc(-50% - 8px)); }
+    }
+    .section-reviews {
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+                mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+    }
+
+    .imggrid-tall, .imggrid-half { height: 280px; }
+    .imggrid { gap: 16px; }
+    .imggrid-col { gap: 16px; }
+
+    .form-card { padding: 32px 24px 100px; }
+    .chips { gap: 8px; margin-bottom: var(--sp-6); }
+    .chip span { padding: 0 16px; font-size: 13px; min-height: 40px; }
+    .btn-submit { right: 24px; bottom: 24px; min-height: 48px; padding: 14px 20px; }
+
+    .contact-grid, .footer-inner, .cookie-options { grid-template-columns: 1fr; }
+    .footer-inner { gap: var(--sp-6); }
+
+    .cookie-banner { left: 12px; right: 12px; bottom: 12px; padding: 20px 18px; }
+    .cookie-actions { justify-content: stretch; }
+    .cookie-actions .btn { flex: 1 1 calc(50% - 4px); }
+}
+
+/* SMALL ≤ 420 ================================================== */
+@media (max-width: 420px) {
+    :root { --fs-hero: clamp(40px, 12vw, 56px); --fs-title: 26px; }
+    .hero h1 { line-height: 0.95; }
+    .gallery-tile { height: 320px; }
+    .review-card { flex: 0 0 260px; width: 260px; }
+    .cookie-actions .btn { flex: 1 1 100%; }
+}
+
+/* MOTION & ACCESSIBILITY ======================================= */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+    .reviews-track { animation: none !important; }
+    html { scroll-behavior: auto; }
+}
+
+/* Focus styles for keyboard nav — only on links/inputs/CTAs (not accordion heads) */
+:focus { outline: none; }
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.btn:focus-visible,
+.chip input:focus-visible + span,
+.menu-toggle:focus-visible {
+    outline: 2px solid var(--navy);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+/* On hero / dark surfaces flip to white outline */
+.hero a:focus-visible,
+.site-header a:focus-visible,
+.site-footer a:focus-visible,
+.form-card .btn:focus-visible {
+    outline-color: var(--white);
+}
